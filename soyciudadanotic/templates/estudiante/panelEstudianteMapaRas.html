@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Resume - Start Bootstrap Theme</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename ='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/devicons/css/devicons.min.css')}}" rel="stylesheet'">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link type="text/css" href="{{url_for('static', filename ='css/resume.min.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{url_for('static', filename ='css/stylebutton.css')}}" rel="stylesheet"  />
+
+    <script type="text/javascript" src="{{url_for('static', filename ='js/phaser.min.js')}}"></script>
+
+  </head>
+
+  <body id="page-top" style="background: #efebe9;">
+    <nav class="navbar nav_style navbar-expand-lg navbar-dark  fixed-top" id="sideNav" style="background: #FCB622;">
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <div class="hidden-xs" style="overflow: hidden; width: 100%;">
+            <div class="col-md-5" style="float: left;">
+              <img  src=" {{ url_for('static', filename='img/encabezado.png') }} " class="img-responsive" alt="Soy ciudadano TIC"> 
+            </div>
+            <div class="col-md-7" style="float: left;"> 
+              <H3 style="font-weight:bold; color: #1E3077;">SOY CIUDADANO TIC</H3>
+              <!--<FONT FACE="calibri" SIZE=5 COLOR="1E3077" style="">
+                SOY CIUDADANO TIC</FONT> --> 
+            </div>
+           </div>
+           <br><br>  
+          <li class="nav-item">
+            
+                <button type="button" class="propiedades_boton bn" >
+                  <img class="tamanio_imagen" src="{{ url_for('static', filename ='img/principal1.png')}}" alt="">
+                </button>
+                <ul class="dropdown-content">
+                    {% for ra in ras %}
+                        <br>
+                        <li> 
+                            <button class=" propiedades_boton_menú bn tam_boton_grande">
+                                <a href="/estudiante/ra/{{ra.id_ra}}" style= "color: #1E3077" name="buscarUsuario">{{ra.id_ra}}</a>
+
+                            </button>
+                        </li>
+                        
+                    {% endfor %}
+                  <!--<br>
+                  <li> 
+                    <button class=" propiedades_boton_menú bn tam_boton_grande">¿Qué tema estoy viendo?</button>
+                  </li>
+                  <br>
+                  <li><button class="propiedades_boton_menú bn tam_boton_pequenio">Ver videoclip</button></li>
+                  <br>
+                  <li><button class="propiedades_boton_menú bn tam_boton_pequenio">Ver guía</button></li>
+                  <br>-->
+
+                </ul>
+            
+          </li>
+        </ul>
+
+      </div>
+    </nav>
+
+
+    <div></div>
+    <div class="container col-sm-10" >
+        <script>
+            function info_ras(){
+                var text = "{{ras}}";
+                    //;
+                    var res = text.split("&#39");
+                    
+                    var trozos = "";
+                    var i;
+                    for(var i = 0; i < res.length; i++){
+                        if(i % 2 != 0){
+                            trozos += res[i].substring(2, res[i].length)+"\n";
+                        }
+                    }
+
+                    return trozos.split("\n");
+                    
+            }
+
+            function alineador(text){
+            
+                var arreglo= text.split(" ");
+                var prueba = ""; 
+                for(var i = 0; i < arreglo.length; i++){
+                    if((i % 4 == 0) && (i != 0)){
+                       prueba += arreglo[i]+"\n";     
+                    }else{
+                        prueba += arreglo[i]+" ";
+                    }
+                }
+                return prueba;
+            }    
+        
+            var game = new Phaser.Game(800, 600, Phaser.AUTO, null, { preload: preload, create: create, update: update});
+            var titulo_curso; 
+            var descripcion_curso;
+            var cerrar;
+            var text ="";
+            var ras = info_ras();
+            var boton_iniciar;
+            var player;
+            var cursors;
+            var estado_intruccion = false;
+            
+
+            function preload() {
+                game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+                game.scale.pageAlignHorizontally = true;
+                game.scale.pageAlignVertically = true;
+                game.load.image('background','../../static/img/mapa-ras.jpg');
+                game.load.image('target', '../../static/img/base.png');
+                game.load.image('player','../../static/img/caballero.png');
+                game.load.image('instruccion', '../../static/img/instruccion.png');
+                game.load.image('boton_iniciar', '../../static/img/boton_iniciar.png');
+            }
+
+            
+
+            function create() {
+
+                game.add.tileSprite(0, 0, 912, 800, 'background');
+                game.world.setBounds(0, 0, 912, 800);
+                game.physics.startSystem(Phaser.Physics.P2JS);
+
+                blanco = game.add.sprite(435, 235, 'target');
+                blanco.inputEnabled = true;
+                player = game.add.sprite(game.world.centerX, game.world.centerY, 'player');
+                
+                cuadro_intruccion = game.add.sprite(game.width*0.5, game.height*0.5, 'instruccion')
+                cuadro_intruccion.anchor.setTo(0.5,0.5);
+                descripcion_curso = game.add.text(game.width*0.5,game.height*0.5, "", {font: '20px Calibri', wordWrap: true, wordWrapWidth: 340, align: "center"});
+                descripcion_curso.anchor.setTo(0.5,0.5);
+                descripcion_curso.addColor("#1E3077", 0);
+                boton_iniciar = game.add.sprite(game.width*0.5, game.height*0.5+100, 'boton_iniciar')
+                boton_iniciar.anchor.setTo(0.5,0.5);
+                boton_iniciar.inputEnabled = true;
+
+                grupo_instruccion = game.add.group();
+                grupo_instruccion.add(cuadro_intruccion);
+                grupo_instruccion.add(descripcion_curso);
+                grupo_instruccion.add(boton_iniciar);
+                grupo_instruccion.fixedToCamera = true;
+                grupo_instruccion.scale.setTo(0.0);
+                
+                 
+                
+
+                game.physics.p2.enable(player);
+
+                player.body.fixedRotation = true;
+
+                cursors = game.input.keyboard.createCursorKeys();
+
+                //  Notice that the sprite doesn't have any momentum at all,
+                //  it's all just set by the camera follow type.
+                //  0.1 is the amount of linear interpolation to use.
+                //  The smaller the value, the smooth the camera (and the longer it takes to catch up)
+                game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+                game.physics.enable(player, Phaser.Physics.ARCADE);
+                
+                boton_iniciar.events.onInputDown.add(limpiar_instruccion, this);    
+
+            }
+
+            function p(pointer){
+                console.log(pointer.event);
+
+            }
+
+            function shake() {
+
+                //  You can set your own intensity and duration
+                game.camera.shake(0.05, 500);
+
+            }
+
+            function update() {
+                
+                player.body.setZeroVelocity();
+
+                if (cursors.up.isDown)
+                {
+                    player.body.moveUp(300)
+                }
+                else if (cursors.down.isDown)
+                {
+                    player.body.moveDown(300);
+                }
+
+                if (cursors.left.isDown)
+                {
+                    player.body.velocity.x = -300;
+                }
+                else if (cursors.right.isDown)
+                {
+                    player.body.moveRight(300);
+                }
+
+                if (game.input.mousePointer.isDown)
+                {
+                    tween = game.add.tween(player.body).to( { y: game.input.y + game.camera.y, x: game.input.x + game.camera.x}, 250, null, true)
+                    //como redireccionar a una pagina web
+                    //window.location.href = "https://www.google.com.co";
+                }
+
+                if (blanco.input.justOver() && estado_intruccion == false)
+                {
+                    
+                       
+                    escalar_instruccion();
+                   //game.add.sprite(435, 0, 'target');
+                }
+                if(boton_iniciar.input.onDown)
+                {
+                  limpiar_instruccion();  
+                }
+
+            }
+
+            function escalar_instruccion(){
+
+                estado_intruccion = true;
+                descripcion_curso.text=ras[1];
+                tween4 = game.add.tween(grupo_instruccion.scale).to({x:1,y:1}, 500, Phaser.Easing.Linear.None, true);
+                
+
+            }
+
+            function limpiar_instruccion(){
+               cuadro_intruccion.scale.setTo(0.0);
+               descripcion_curso.scale.setTo(0.0); 
+               boton_iniciar.scale.setTo(0.0);
+               window.location.href = "/estudiante/ra/"+ras[0];     
+            }
+
+        </script>    
+
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename ='vendor/jquery/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename ='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename = 'vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script type="text/javascript" src="{{ url_for('static', filename ='js/resume.min.js')}}"></script>
+
+  </body>
+
+</html>
+
+    
+
+
+
+ 

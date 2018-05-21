@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Resume - Start Bootstrap Theme</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename ='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/devicons/css/devicons.min.css')}}" rel="stylesheet'">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link type="text/css" href="{{url_for('static', filename ='css/resume.min.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{url_for('static', filename ='css/stylebutton.css')}}" rel="stylesheet"  />
+
+    <script type="text/javascript" src="{{url_for('static', filename ='js/phaser.min.js')}}"></script>
+
+  </head>
+
+  <body id="page-top" style="background: #efebe9;">
+    <nav class="navbar nav_style navbar-expand-lg navbar-dark  fixed-top" id="sideNav" style="background: #FCB622;">
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <div class="hidden-xs" style="overflow: hidden; width: 100%;">
+            <div class="col-md-5 col-xs" style="float: left;">
+              <img  class="img-responsive" src=" {{ url_for('static', filename='img/encabezado.png') }} " class="img-responsive" alt="Soy ciudadano TIC"> 
+            </div>
+            <div class="col-md-7 col-xs" style="float: left;"> 
+              <H3 style="font-weight:bold; color: #1E3077; font-size: 1.5em">SOY CIUDADANO TIC</H3>
+              <!--<FONT FACE="calibri" SIZE=5 COLOR="1E3077" style="">
+                SOY CIUDADANO TIC</FONT> --> 
+            </div>
+           </div>
+           <br><br>  
+          <li class="nav-item">
+            
+                <button title="Menú de cursos" type="button" class="propiedades_boton bn" >
+                  <img class="tamanio_imagen" src="{{ url_for('static', filename ='img/principal1.png')}}" alt="">
+                </button>
+                <ul class="dropdown-content">
+                    {% for curso in cursos %}
+                        <br>
+                        <li> 
+                            <!--<button class=" propiedades_boton_menú bn tam_boton_grande" name="{{curso.id_curso}}">
+                                <a href="/principalEstudiante1/{{curso.id_curso}}" style= "color: #1E3077" name="buscarUsuario">{{curso.nombre}}</a>
+
+                            </button>-->
+                            <button title="Dar clic para ir al curso" class=" propiedades_boton_menú bn tam_boton_grande" id="{{curso.id_curso}}" onclick="location.href='/principalEstudiante1/{{curso.id_curso}}'" disabled="true" style="opacity: 0.5">
+                              {{curso.nombre}}
+                              </button>
+                        </li>
+                        
+                    {% endfor %}
+                  
+            </ul>
+          </li>
+          <br>
+          <br>
+          <br>  
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <li class="nav-item">
+
+            <div class="container">
+                <form class="form-horizontal" name="sentMessage" id="logingForm" >
+                <div class="col-sm-8"></div>
+                <div class="col-sm-offset-4 col-sm-12">
+                <button type="submit" class="btn btn-default salir" id="salir" name="ref" value="logout" style="">Cerrar sesión</button>
+                </div>
+                </form>
+            </div>
+
+          </li>
+        </ul>
+
+      </div>
+    </nav>
+    <script>
+       var cursos = {{info_cursos|safe}};
+      document.getElementById("C01").style.opacity=1;
+      document.getElementById("C01").disabled=false;
+      document.getElementById("C02").style.opacity=1;
+      document.getElementById("C02").disabled=false;
+      document.getElementById("C03").style.opacity=1;
+      document.getElementById("C03").disabled=false;
+      
+      
+        var w = 800;
+        var h = 600;
+        var game = new Phaser.Game(w, h, Phaser.AUTO, null, {
+          preload: preload, create: create, update: update
+        });
+        
+
+        function preload() {
+           
+
+            game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+            //game.scale.pageAlignHorizontally = true;
+            //game.scale.pageAlignVertically = true;
+            game.stage.disableVisibilityChange = true;
+            game.stage.backgroundColor = '#efebe9';
+            game.load.image('mapa_ras', '../../static/img/mapa_colombia.png');
+            game.load.image('target', '../../static/img/podio.png');
+            game.load.image('computador', '../../static/img/computador.png');
+            game.load.image('software', '../../static/img/software.png');
+            game.load.image('internet', '../../static/img/internet.png');
+            game.load.image('word', '../../static/img/word.png');
+            game.load.image('excel', '../../static/img/excel.png');
+            game.load.image('power point', '../../static/img/power point.png');          
+            game.load.image('android', '../../static/img/android.png');
+            
+        }
+        function create() {
+            game.add.sprite(150, 0, 'mapa_ras');
+
+            
+
+            var alto = h - 50;
+            var inicio = 100 + 50
+            var avance = 50
+            var estacion1 = game.add.sprite(230, 150, 'computador');
+            game.add.text(estacion1.x - 220, estacion1.y + estacion1.height*0.5 - 10, cursos[0][1], {font: 'bold 20px Calibri'});
+
+            //estacion1.scale.setTo(0.0);
+            //game.add.sprite(estacion1.x - estacion1.width*0.5 + 50, estacion1.y - estacion1.width*0.5, 'computador');
+            var estacion2 = game.add.sprite(estacion1.x + 120, estacion1.y + 30, 'software');
+            game.add.text(estacion2.x + 90, estacion2.y + estacion2.height*0.5 - 10, cursos[1][1], {font: 'bold 20px Calibri'});
+
+            //game.add.sprite(estacion2.x - estacion2.width*0.5 + 50, estacion2.y - estacion2.width*0.5, 'software');
+            //estacion2.scale.setTo(0.0);
+            var estacion3 = game.add.sprite(estacion2.x - 100, estacion2.y + 60, 'internet');
+            game.add.text(estacion3.x - 220, estacion3.y + estacion3.height*0.5 - 10, cursos[2][1], {font: 'bold 20px Calibri'});
+            var estacion4 = game.add.sprite(estacion3.x + 120, estacion3.y + 30, 'word');
+            game.add.text(estacion4.x + 200, estacion4.y + estacion4.height*0.5 - 10, cursos[3][1], {font: 'bold 20px Calibri'});
+            var estacion5 = game.add.sprite(estacion4.x - 100, estacion4.y + 60, 'excel');
+            game.add.text(estacion5.x - 240, estacion5.y + estacion5.height*0.5 - 10, cursos[4][1], {font: 'bold 20px Calibri'});
+            var estacion6 = game.add.sprite(estacion5.x + 120, estacion5.y + 30, 'power point');
+             game.add.text(estacion6.x + 110, estacion6.y + estacion6.height*0.5 - 10, cursos[5][1], {font: 'bold 20px Calibri'});
+             var estacion7 = game.add.sprite(estacion6.x - 100, estacion6.y + 60, 'android');
+             game.add.text(estacion7.x + 110, estacion7.y + estacion6.height*0.5 - 10, cursos[6][1], {font: 'bold 20px Calibri'});
+            /*for (var  i = 0;  i < cursos.length;  i++) {
+                var estacion = "";
+                
+
+                //if para la creación escalonada de las bases
+                if(i % 2 == 0){
+                    estacion = game.add.sprite(inicio + avance, alto - avance, 'target');
+                    
+                    avance = avance + 50;
+
+                } else{
+                    estacion = game.add.sprite(inicio + avance + 60, alto - avance + 20, 'target');
+                   
+                    avance = avance + 50;
+
+                }
+              }*/
+           
+        }
+
+        function update() {
+           
+        }
+</script>
+    
+    <script type="text/javascript">
+      //disabled="true" style="background: linear-gradient(#C5E1A5, white);"
+     
+      
+      
+    </script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename ='vendor/jquery/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename ='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename = 'vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script type="text/javascript" src="{{ url_for('static', filename ='js/resume.min.js')}}"></script>
+
+  </body>
+
+</html>
+
+    
+
+
+
+ 

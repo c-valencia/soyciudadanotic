@@ -1,0 +1,238 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Gamedev Phaser Workshop - lesson 01: Initialize the framework</title>
+    <!--<style>* { padding: 0; margin: 0; }</style>-->
+
+        <script type="text/javascript" src="{{url_for('static', filename ='js/phaser.min.js')}}"></script>
+    <!--<script src="js/phaser.min.js"></script>-->
+</head>
+<body>
+
+<script>
+
+//1320, 640
+    var game = new Phaser.Game(1320, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update});
+    var contenido_actividades =  {{avance_actividades|safe }};
+    var ras = {{ras|safe}};
+    //alert(contenido_actividades);
+    //alert(ras);
+
+        function preload() {
+            game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+            game.scale.pageAlignHorizontally = true;
+            game.scale.pageAlignVertically = true;
+            game.stage.disableVisibilityChange = true;
+            game.stage.backgroundColor = '#eee';  
+            game.load.spritesheet('icons','../../static/img/icons.png',64,64);
+            game.load.image('separador', '../../static/img/point.png'); 
+            game.load.image('background','../../static/img/mapa-cali.png');
+            game.load.image('target', '../../static/img/base.png');
+            game.load.image('player','../../static/img/caballero.png');
+            game.load.image('Video', '../../static/img/video.png');
+            game.load.image('Guía', '../../static/img/personal.png');
+            game.load.image('Cuestionario', '../../static/img/cuestionario.png');
+            game.load.image('Juego', '../../static/img/cuestionario.png');
+            game.load.image('True', '../../static/img/chulito.png');
+            game.load.image('False', '../../static/img/pendiente.png');
+            game.load.image('boton_iniciar', '../../static/img/boton_regresar.png');    
+
+        }
+
+        var player;
+        var cursors;
+
+function create() 
+{
+    game.physics.startSystem(Phaser.Physics.P2JS);
+    
+    
+
+    
+
+    var alto = 50;
+    var inicio = 250;
+    var avance_x = 30;
+    var avance_y = 60;
+    var inicio_nivel=20;
+
+    var sepY=0;
+    var contador = 1;
+    var estacion;
+    var ultima_estacion_completada;
+    var text;
+    var estado;
+    var tipo_actividad;
+    var titulo_actividad;
+    var estado_actividad;
+    var nivel_actividad;
+    for(var  j = 0;  j < contenido_actividades.length;  j++) 
+    {
+        nivel_actividad = contenido_actividades[j][2];
+        tipo_actividad= contenido_actividades[j][4];
+        titulo_actividad = nivel_actividad+") "+contenido_actividades[j][3];
+        estado_actividad=contenido_actividades[j][5];
+        if(nivel_actividad=="1")
+        {    
+
+            var text_separador;
+                var text_nivel;  
+                var initY=alto+avance_y*j+avance_y*0.5;
+                
+                if (text!=null) 
+                {
+                    initY+=25;
+
+
+                }
+                
+
+
+                //text_separador = new Phaser.Line(0,initY,game.world.width,initY);
+                text_separador = game.add.sprite(0, initY,'separador');
+                text_separador.scale.set(game.world.width/text_separador.width,0.25);
+                text_separador.anchor.set(0.5,0.5);
+                text_separador.x+=text_separador.width*0.5;
+                
+                text_nivel = game.add.text(10, text_separador.y, "Nivel "+contador+": "+ras[contador-1][1], {font: 'bold 20px Calibri'})
+                text_nivel.y+= text_nivel.height*0.5;
+                contador = contador + 1;                
+        }
+        else
+        {
+                text_nivel=null;
+                text_separador=null;
+
+        }
+             
+
+
+        if (text_nivel!=null) 
+        {
+
+            text = game.add.text(inicio+avance_x,text_nivel.y+text_nivel.height+35,titulo_actividad+"" , {font: 'bold 15px Calibri', backgroundColor: '#FCB622',wordWrapWidth:game.world.width*0.75,  wordWrap:true});
+            text.anchor.set(0.5,0.5);
+            text.x+=text.width*0.5;
+
+        }
+        else
+        {
+
+            text = game.add.text(inicio+avance_x,text.y+text.height+30,titulo_actividad+"" , {font: 'bold 15px Calibri', backgroundColor: '#FCB622',wordWrapWidth:game.world.width*0.75,  wordWrap:true});
+            text.anchor.set(0.5,0.5);
+            text.x+=text.width*0.5;                
+        }
+
+
+        estacion = game.add.sprite(text.x-text.width*0.5-10,text.y,'icons');
+        estacion.animations.add('Video',[5],0,true);
+        estacion.animations.add('Guía',[3],0,true);
+        estacion.animations.add('Juego',[4],0,true);
+        estacion.animations.add('Cuestionario',[2],0,true);
+        estacion.animations.play(tipo_actividad);
+        estacion.scale.set(0.5,0.5);
+        estacion.anchor.set(0.5,0.5);
+        estacion.x-=estacion.width*0.5;
+
+
+        estado =  game.add.sprite(estacion.x -estacion.width*0.5-10, estacion.y,'icons' );
+        estado.scale.set(0.5,0.5);
+        estado.anchor.set(0.5,0.5);
+        estado.x-=estado.width*0.5;
+        estado.animations.add('True',[0],0,true);
+        estado.animations.add('False',[1],0,true);
+        
+        estado.animations.play(estado_actividad);
+        if (estado_actividad=="True")
+        {
+            ultima_estacion_completada = estacion;
+        }
+
+
+    }
+
+
+    game.world.setBounds(0, 0, 1320, estacion.y+50 );
+
+
+            if (ultima_estacion_completada!=null)
+             {
+                player = game.add.sprite(0, ultima_estacion_completada.y, 'player');
+             }
+             else
+            {
+                player = game.add.sprite(0, 200, 'player');
+            }
+
+            player.x+=player.width+125;
+            
+
+            game.physics.p2.enable(player);
+
+            player.body.fixedRotation = true;
+
+            cursors = game.input.keyboard.createCursorKeys();
+            game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+            game.physics.enable(player, Phaser.Physics.ARCADE);
+            cerrar =game.add.sprite(game.camera.x, game.camera.y, 'boton_iniciar');     
+            cerrar.fixedToCamera = true;
+            cerrar.inputEnabled = true;    
+            cerrar.events.onInputDown.add(principal, this);
+
+}
+
+
+        function update() {
+            
+            
+            player.body.setZeroVelocity();
+
+            if (cursors.up.isDown)
+            {
+                player.body.moveUp(300)
+            }
+            else if (cursors.down.isDown)
+            {
+                player.body.moveDown(300);
+            }
+
+            if (cursors.left.isDown)
+            {
+                player.body.velocity.x = -300;
+            }
+            else if (cursors.right.isDown)
+            {
+                player.body.moveRight(300);
+            }
+
+            if (game.input.mousePointer.isDown)
+            {
+                tween = game.add.tween(player.body).to( { y: game.input.y + game.camera.y, x: game.input.x + game.camera.x}, 250, null, true)
+                //como redireccionar a una pagina web
+                //window.location.href = "https://www.google.com.co";
+            }
+            if(cerrar.input.onDown)
+            {
+               principal();   
+            }
+
+            
+
+
+        }
+
+        function principal(){
+            window.location.href = "/principalEstudiante1/{{curso}}"; 
+            //alert("estoy en principal"); 
+        }
+
+/*function render() {
+
+    game.debug.text("Arrows to move. Click to shake", 32, 32);
+
+}*/
+    
+</script>
+   
+</body>
+</html>

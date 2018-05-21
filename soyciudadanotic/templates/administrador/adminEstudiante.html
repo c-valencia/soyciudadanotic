@@ -1,0 +1,357 @@
+{% extends 'administrador/base/base_administrador.html'%}
+{% block content %}
+    
+
+    <div class="container-f">
+        <div class="col-xs">
+            <br><br><br><br><br><br><br>
+        
+            <div class="col-md-12">
+        	   <h2>Administración de EStudiantes</h2>
+
+    			
+    				<div class="container">
+                        <p>Para buscar digite el nombre o la identificacion del estudiante</p>  
+							<input type="text" id="buscador" class="form-control" placeholder="Buscar por..." >
+                    </div>
+    		</div>
+                    <hr>
+    		<div class="container" style="background-color: white;">
+    		    <table class="table table-hover table-bordered table-striped" >
+                            <thead>
+                                <tr>
+                                    <th>Identidficación</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th style="display : none;">Fecha nacimiento</th>
+                                    <th style="display : none;">telefono</th>
+                                    <th style="display : none;">direccion</th>
+                                    <th style="display : none;">comuna</th>
+                                    <th style="display : none;">barrio</th>
+                                    <th style="display: none;">email</th>
+                                    <th>Editar</th>
+                                    <th>Eliminar</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody id="buscarUsuario">
+                                {% for usuario in users %}
+                                  <tr>
+                                    <td> {{ usuario.num_identificacion }} </td>
+                                    <td> {{ usuario.nombres }} </td>
+                                    <td> {{ usuario.apellidos }} </td>
+                                    <td style="display : none;"> {{ usuario.fecha_nacimiento }} </td>
+                                    <td style="display : none;"> {{ usuario.telefono }} </td>
+                                    <td style="display : none;"> {{ usuario.direccion }} </td>
+                                    <td style="display : none;"> {{ usuario.comuna }} </td>
+                                    <td style="display : none;"> {{ usuario.barrio }} </td>
+                                    <td style="display : none;"> {{ usuario.email }} </td>
+                                    <td class="botonEditar" style="width: 20px">
+                                        <div class="col-md-5" style="float: left;">
+                                            <img  src=" {{ url_for('static', filename='img/chulito.png') }} " class="img-responsive" alt="Chulito">
+                                        </div>
+                                        
+                                    </td>
+                                    <td  class="botonEliminar" style="width: 20px">
+                                        <div class="col-md-5" style="float: left;">
+                                            <img  src=" {{ url_for('static', filename='img/equiz.png') }} " class="img-responsive" alt="Chulito">
+                                        </div>
+                                        
+                                    </td>
+                                  </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+    			    </form>
+                </div>
+            </div>
+      </div>
+        
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+
+  
+      
+    
+
+    <style>
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 199; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+
+        }
+    </style>
+
+
+    <div id="myModal" class="modal" >
+      <div class="modal-content" >
+        <span class="close">&times;</span>
+         <form class="form-horizontal" method="POST" id="formModificarEstudiante">
+         
+            <div class="form-group">
+              <label class="control-label col-sm-2 my_fonts" for="login">Numero Identificacion:</label>
+              <div class="col-sm-12">
+                <input type="text" name="numero_identificacion" class="form-control required" name="numero_identificacion" id="numero_identificacion" readonly="readonly">
+              </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-6 my_fonts" for="nombre">Nombre:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control required" name="nombre" id="nombre" placeholder="Nombre">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-6 my_fonts" for="apellido">Apellido:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control required" name="apellido" id="apellido" placeholder="Apellido">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-6 my_fonts" for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control required" name="fecha_nacimiento" id="fecha_nacimiento">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-6 my_fonts" for="telefono">Teléfono:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control required" name="telefono" id="telefono" placeholder="Teléfono" minlength="7" maxlength="10">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label col-sm-6 my_fonts" for="direccion">Dirección:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control required" name="direccion" id="direccion" placeholder="Dirección">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-6 my_fonts" for="comuna">Comuna:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control required number" name="comuna" id="comuna" placeholder="Comuna">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-6 my_fonts" for="barrio">Barrio:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control required" name="barrio" id="barrio" placeholder="Barrio">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label col-sm-6 my_fonts" for="correo">Correo:</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control required email" name="correo" id="correo" placeholder="Correo">
+                </div>
+            </div>
+
+
+            <div class="form-group"> 
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" name="guardar" class="btn btn-default btn btn-success">Guardar</button>
+              </div>
+            </div>
+          </form>
+      </div>
+    </div>
+
+    <div id="myModal1" class="modal" >
+      <div class="modal-content" >
+        <span class="close1">&times;</span>
+        <form class="form-horizontal" method="POST">
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <input type="text" name="identificacionEliminar" class="form-control" id="identificacionEliminar" readonly="readonly">
+                </div>    
+                     <p>Está seguro que desea eliminar el registro </p>
+                <div class="col-sm-offset-2 col-sm-10">     
+                    <button type="submit" name="eliminar" class="btn btn-default   btn btn-danger" style="width: 100px">Eliminar</button>
+                </div>
+            </div>
+        </form>               
+      </div>
+    </div>
+
+    
+    <script>
+
+     $(document).ready(function(){
+        $("#buscador").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#buscarUsuario tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      }); 
+      
+        
+        $(document).ready(function(){
+            $(".botonEditar").click(function(){
+
+              // Get the modal
+          
+                var modal = document.getElementById('myModal');
+
+                // Get the button that opens the modal
+                
+
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks the button, open the modal 
+               
+
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+           
+                var valores="";
+     
+                // Obtenemos todos los valores contenidos en los <td> de la fila
+                // seleccionada
+                $(this).parents("tr").find("td").each(function(){
+                    valores+=$(this).html()+"\n";
+                });
+                    
+                
+                var res = valores.split("\n");
+                var num_identificacion= res[0];
+                var nombres= res[1];
+                var apellidos= res[2];
+                var fecha_nacimiento = res[3];
+                var telefono = res[4];
+                var direccion = res[5];
+                var comuna = res[6];
+                var barrio = res[7];
+                var email= res[8];
+
+
+                num_identificacion= num_identificacion.substring(1, num_identificacion.length - 1);
+                nombres= nombres.substring(1, nombres.length - 1);
+                apellidos= apellidos.substring(0, apellidos.length - 1);
+                fecha_nacimiento = fecha_nacimiento.substring(1, fecha_nacimiento.length - 1);
+                telefono = telefono.substring(1, telefono.length - 1);
+                direccion = direccion.substring(1, direccion.length - 1);
+                comuna = comuna.substring(1, comuna.length - 1);
+                barrio = barrio.substring(1, barrio.length - 1);
+                email= email.substring(1, email.length - 1);
+
+
+                document.getElementById('numero_identificacion').value =  num_identificacion;
+                document.getElementById('nombre').value = nombres;
+                document.getElementById('apellido').value = apellidos;
+                document.getElementById('fecha_nacimiento').value = fecha_nacimiento;
+                document.getElementById('telefono').value = telefono;
+                document.getElementById('direccion').value = direccion;
+                document.getElementById('comuna').value = comuna;
+                document.getElementById('barrio').value = barrio;
+                document.getElementById('correo').value = email;
+
+                
+                
+                modal.style.display = "block";
+            });
+        });
+
+        $(document).ready(function(){
+            $(".botonEliminar").click(function(){
+
+              // Get the modal
+          
+                var modal1 = document.getElementById('myModal1');
+
+                // Get the button that opens the modal
+                
+
+                // Get the <span> element that closes the modal
+                var span1 = document.getElementsByClassName("close1")[0];
+
+                // When the user clicks the button, open the modal 
+               
+
+                // When the user clicks on <span> (x), close the modal
+                span1.onclick = function() {
+                    modal1.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal1) {
+                        modal1.style.display = "none";
+                    }
+                }
+           
+                var valores1="";
+     
+                // Obtenemos todos los valores contenidos en los <td> de la fila
+                // seleccionada
+                $(this).parents("tr").find("td").each(function(){
+                    valores1+=$(this).html()+"\n";
+                });
+                    
+                
+                var res1 = valores1.split("\n");
+                var num_identificacion= res1[0];
+                num_identificacion= num_identificacion.substring(1, num_identificacion.length - 1);
+
+                document.getElementById('identificacionEliminar').value =  num_identificacion;
+
+                modal1.style.display = "block";
+            });
+        });
+        $("#formModificarEstudiante").validate();
+    </script>
+   
+
+{% endblock %}
+

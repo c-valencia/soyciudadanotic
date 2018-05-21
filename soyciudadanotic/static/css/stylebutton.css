@@ -1,0 +1,122 @@
+
+.navbar-nav{
+  width: 10em;
+}
+
+.propiedades_boton{
+  background: #FCB622;
+  /*border-color: #ffb300;
+  border-left-width: 60%; */
+  border-left-width: 60%;
+  color: #1E3077;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #f00;
+  width: 65%;
+  height: 65%;
+  outline-offset: none;
+  cursor: pointer;
+}
+
+.propiedades_boton_menú{
+
+  background: #C5E1A5;
+  /*border-color: #ffb300;*/
+  /*border-left-width: 5px;
+  font-size:150%;*/
+  border-left-width: 60%; 
+  color: #1E3077;
+  border-radius: 1em;
+  
+  font-size:1.3em;
+  font-family:Calibri;
+  font-weight:bold;
+  width: 50em;
+  height: 50em;
+  cursor: pointer;
+  
+  /*outline-offset: none;*/
+}
+.tam_boton_grande{
+  width: 85%;
+  height: 4%;
+}
+
+.tam_boton_pequenio{
+  alignment-baseline: center;
+  width: 85%;
+  height: 10%;
+}
+.tamanio_imagen{
+  width: 100%;
+  height: 100%;
+
+}
+.border_item{
+  border: 1px solid rgba(0, 0, 0, 0.5); 
+}
+.nav_style{
+  background: #efebe9;
+
+}
+.sub_nav_style{
+  background: #aed581;
+}
+ 
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16%;
+    font-size: 16%;
+    border: none;
+    cursor: pointer;
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    border: o none;
+    position: relative;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+html {
+  box-sizing: border-box;
+  background: #efebe9;
+}
+
+
+#sideNav li ul {
+    position: absolute;
+    width: 0;
+    left: 95%;
+    top: 0;
+    overflow: hidden;
+}
+#sideNav li:hover ul, #sideNav li:focus ul {
+    border-radius: 8%;
+    width: 100%;
+    background:  #aed581;
+    z-index: 1;
+    text-align-last:  center;
+}
+
+#flotante{  /*padre*/
+  overflow: hidden;
+  width: 100%; 
+}
+#flotante .A, #flotante .B{  /*hijos*/
+  float: left;
+}
+.salir{
+  width: 100%; 
+  height: 80%; 
+  background: #FCB622; 
+  box-shadow: 0 0 10px #f00;
+  font-size:1.5em;
+  font-family:Calibri;
+  font-weight:bold;
+  color: #1E3077;
+  cursor: pointer;
+}

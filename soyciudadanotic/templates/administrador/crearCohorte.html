@@ -1,0 +1,42 @@
+{% extends 'administrador/base/base_administrador.html'%}
+{% block content %}
+
+<div class="container-f">
+	<div class="col-xs">
+		<br><br>
+
+		<div class="col-md-12">
+			<h2>Creacion de Cohortes</h2>
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label class="control-label col-sm-6 my_fonts" for="id_cohorte">ID cohorte:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="id_cohorte" placeholder="ID Cohorte">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-6 my_fonts" for="fecha_inicio">Fecha inicio:</label>
+					<div class="col-sm-10">
+						<input type="date" class="form-control" id="fecha_inicio" placeholder="Enter date">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-6 my_fonts" for="fecha_fin">Fecha fin:</label>
+					<div class="col-sm-10">
+						<input type="date" class="form-control" id="fecha_fin" placeholder="Enter date">
+					</div>
+				</div>
+
+				<div class="form-group"> 
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-default  my_fonts button_submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+					</div>
+				</div>
+			</form>
+          </div>
+    </div>
+</div>
+
+{% endblock %}

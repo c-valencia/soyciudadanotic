@@ -1,0 +1,119 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Gamedev Phaser Workshop - lesson 01: Initialize the framework</title>
+    <!--<style>* { padding: 0; margin: 0; }</style>-->
+
+        <script type="text/javascript" src="{{url_for('static', filename ='js/phaser.min.js')}}"></script>
+    <!--<script src="js/phaser.min.js"></script>-->
+</head>
+<body>
+
+    <script>
+      
+        var w = 800;
+        var h = 600;
+        var game = new Phaser.Game(w, h, Phaser.AUTO, null, {
+          preload: preload, create: create, update: update
+        });
+        
+        var ras = {{ras|safe}}; 
+        var player_x = 0;
+        var player_y = 0;
+        function base_actual(){
+            var base = "";
+            for(var  i = 0;  i < ras.length;  i++){
+                if(ras[i][3] == "False"){
+
+                    base = ras[i];
+                    break;
+                }
+            }
+            return base;
+        }
+
+        function preload() {
+           
+
+            game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+            game.scale.pageAlignHorizontally = true;
+            game.scale.pageAlignVertically = true;
+            game.stage.disableVisibilityChange = true;
+            game.stage.backgroundColor = '#eee';
+            game.load.image('mapa_ras', '../../static/img/mapa-ras.png');
+          //game.load.image('phaser', '../../static/img/phaser-dude.png');
+    
+            game.load.spritesheet('button', '../../static/img/button_sprite_sheet.png', 193, 71);
+            game.load.image('target', '../../static/img/podio.png');
+            game.load.image('inicio', '../../static/img/inicio.png');
+            game.load.image('final', '../../static/img/final.png');
+            game.load.image('player','../../static/img/caballero.png');
+            game.load.image('chulito','../../static/img/chulito.png');
+            //game.load.image('background','../../static/img/starfield.jpg');
+
+
+            
+        }
+
+        var array=[];
+        var text;
+        function create() {
+            game.add.sprite(100, 0, 'mapa_ras');
+
+            game.stage.backgroundColor = '#cccccc';
+            var alto = h - 50;
+            var inicio = 100 + 50
+            var avance = 50
+          
+            for (var  i = 0;  i < ras.length;  i++) {
+                var estacion = "";
+                var text = "";
+
+                //if para la creación escalonada de las bases
+                if(i % 2 == 0){
+                    estacion = game.add.sprite(inicio + avance, alto - avance, 'target');
+                    text = game.add.text(inicio + avance + 50, alto - avance - 25, ras[i][2])
+                    avance = avance + 50;
+
+                } else{
+                    estacion = game.add.sprite(inicio + avance + 60, alto - avance + 20, 'target');
+                    text = game.add.text(inicio + avance + 50 + 60, alto - avance - 25 + 20, ras[i][2])
+                    avance = avance + 50;
+
+                }
+
+                //if para colocar los chulitos de los RA alcanzados
+                if(ras[i][3]=="True"){
+                    game.add.sprite(estacion.x + 25, estacion.y - 15 , 'chulito');
+                }
+
+                //if para crear el inicio de la ruta
+                if(i == 0){
+                    game.add.sprite(estacion.x - 80, estacion.y + 10 , 'inicio');
+                }
+
+                //if para crear el final de la ruta
+                if(i == ras.length - 1){
+                    game.add.sprite(estacion.x + 60, estacion.y - 50, 'final');
+                }
+
+                //if para crear la posición del personaje
+                if(base_actual()[2] == ""+(i+1)){
+                    player_x=estacion.x + 5;
+                    player_y = estacion.y - 60;
+                }
+             
+               game.add.sprite(player_x, player_y, 'player');
+            }
+  
+           
+        }
+
+        
+
+        function update() {
+           
+        }
+    </script>
+</body>
+</html>

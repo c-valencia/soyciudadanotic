@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Resume - Start Bootstrap Theme</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename ='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/devicons/css/devicons.min.css')}}" rel="stylesheet'">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link type="text/css" href="{{url_for('static', filename ='css/resume.min.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{url_for('static', filename ='css/stylebutton.css')}}" rel="stylesheet"  />
+
+    <script type="text/javascript" src="{{url_for('static', filename ='js/phaser.min.js')}}"></script>
+
+  </head>
+
+  <body id="page-top">
+    <nav class="navbar nav_style navbar-expand-lg navbar-dark  fixed-top" id="sideNav" style="background: #FCB622;">
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <div class="hidden-xs" style="overflow: hidden; width: 100%;">
+            <div class="col-md-5" style="float: left;">
+              <img  src=" {{ url_for('static', filename='img/encabezado.png') }} " class="img-responsive" alt="Soy ciudadano TIC"> 
+            </div>
+            <div class="col-md-7" style="float: left;"> 
+              <H3 style="font-weight:bold; color: #1E3077; font-size: 1.5em">SOY CIUDADANO TIC</H3>
+            </div>
+           </div>
+           <br><br>
+          <li class="nav-item">
+                    <button type="button" class="btn btn-default salir" onclick="location.href='/principalEstudiante1/{{ra.curso_id}}'" style="width: 60%">
+                      Principal
+                    </button>
+          </li>
+          <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>     
+            <li class="nav-item">
+
+                <div class="container">
+                    <form class="form-horizontal" name="sentMessage" id="logingForm" >
+                    <div class="col-sm-8"></div>
+                    <div class="col-sm-offset-4 col-sm-12">
+                    <button type="submit" class="btn btn-default salir" id="salir" name="ref" value="logout">Cerrar sesión</button>
+                    </div>
+                    </form>
+                </div>
+            </li>   
+          <br>
+        </ul>
+
+      </div>
+    </nav>
+
+    
+    
+
+    <div class="container-fluid" style="background: #efebe9;">
+    
+    <div id="panel-formativa" class="embed-responsive embed-responsive-16by9" style="width: 85%; height: 85%">
+      <script type="text/javascript">
+        if("{{actividad_formativa.tipo}}" == "Video"){
+          var div = document.getElementById("panel-formativa");
+          div.innerHTML = '<iframe class="embed-responsive-item"'+'src="//www.youtube.com/embed/{{actividad_formativa.ruta}}">'+'</iframe>';
+        }if("{{actividad_formativa.tipo}}" == "Guía"){
+          var div = document.getElementById("panel-formativa");
+          div.innerHTML = '<embed src="../../static/guias/{{actividad_formativa.ruta}}" width="850" height="600">';
+        }
+      </script>
+        
+    </div>
+     <div>
+        <h4 style="font-weight:bold; color: #1E3077">Actividad:</h4>
+        <h5>  {{actividad_formativa.descripcion}}</h4>
+        <h4 style="font-weight:bold; color: #1E3077">¿Qué aprendizaje estamos buscando? </h4>
+        <h5>{{ra.descripcion}}</h4>  
+     </div>
+
+    </div>
+
+  
+     
+
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename ='vendor/jquery/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename ='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename = 'vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script type="text/javascript" src="{{ url_for('static', filename ='js/resume.min.js')}}"></script>
+
+  </body>
+
+</html>

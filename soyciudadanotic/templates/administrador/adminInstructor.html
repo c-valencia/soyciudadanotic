@@ -1,0 +1,307 @@
+{% extends 'administrador/base/base_administrador.html'%}
+{% block content %}
+    
+
+    <div class="container-f">
+        <div class="col-xs">
+            <br><br><br><br><br><br><br>
+        
+            <div class="col-md-12">
+        	   <h2>Administración de Instructores</h2>
+
+    			
+    				<div class="container">
+                        <p>Para buscar digite el nombre o la identificación del instructor</p>  
+							<input type="text" id="buscador" class="form-control" placeholder="Search for..." >
+                    </div>
+    		</div>
+                    <hr>
+    		<div class="container" style="background-color: white;">
+    		    <table class="table table-hover table-bordered table-striped" >
+                            <thead>
+                                <tr>
+                                    <th>Identidficación</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th style="display: none;">Area</th>
+                                    <th style="display: none;">email</th>
+                                    <th>Editar</th>
+                                    <th>Eliminar</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="buscarUsuario">
+                                {% for usuario in users %}
+                                  <tr>
+                                    <td> {{ usuario.num_identificacion }} </td>
+                                    <td> {{ usuario.nombres }} </td>
+                                    <td> {{ usuario.apellidos }} </td>
+                                    <td style="display: none;"> {{ usuario.area }} </td>
+                                    <td style="display: none;"> {{ usuario.email }} </td>
+                                    <td class="botonEditar" style="width: 20px">
+                                        <div class="col-md-5" style="float: left;">
+                                            <img  src=" {{ url_for('static', filename='img/chulito.png') }} " class="img-responsive" alt="Chulito">
+                                        </div>
+                                        
+                                    </td>
+                                    <td  class="botonEliminar" style="width: 20px">
+                                        <div class="col-md-5" style="float: left;">
+                                            <img  src=" {{ url_for('static', filename='img/equiz.png') }} " class="img-responsive" alt="equiz">
+                                        </div>
+                                        
+                                    </td>
+                                  </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+    			    </form>
+                </div>
+            </div>
+      </div>
+        
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+
+  
+      
+    
+
+    <style>
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 199; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+
+        }
+    </style>
+
+
+    <div id="myModal" class="modal" >
+      <div class="modal-content" >
+        <span class="close">&times;</span>
+         <form class="form-horizontal" method="POST" id="formModificarInstructor">
+         
+            <div class="form-group">
+              <label class="control-label col-sm-2 my_fonts" for="login">Numero Identificacion:</label>
+              <div class="col-sm-12">
+                <input type="text" name="numero_identificacion" class="form-control" id="numero_identificacion" name="numero_identificacion" readonly="readonly">
+              </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label col-sm-6 my_fonts" for="nombre">Nombre:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-6 my_fonts" for="apellido">Apellido:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label col-sm-6 my_fonts" for="area">Área:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="area" name="area" placeholder="Área">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label col-sm-6 my_fonts" for="correo">Correo:</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo">
+                </div>
+            </div>
+
+
+            <div class="form-group"> 
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" name="guardar" class="btn btn-default btn btn-success">Guardar</button>
+              </div>
+            </div>
+          </form>
+      </div>
+    </div>
+
+    <div id="myModal1" class="modal" >
+      <div class="modal-content" >
+        <span class="close1">&times;</span>
+        <form class="form-horizontal" method="POST">
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <input type="text" name="identificacionEliminar" class="form-control" id="identificacionEliminar" readonly="readonly">
+                </div>    
+                     <p>Está seguro que desea eliminar el registro </p>
+                <div class="col-sm-offset-2 col-sm-10">     
+                    <button type="submit" name="eliminar" class="btn btn-default   btn btn-danger" style="width: 100px">Eliminar</button>
+                </div>
+            </div>
+        </form>               
+      </div>
+    </div>
+
+    
+    <script>
+
+     $(document).ready(function(){
+        $("#buscador").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#buscarUsuario tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      }); 
+      
+        
+        $(document).ready(function(){
+            $(".botonEditar").click(function(){
+
+              // Get the modal
+          
+                var modal = document.getElementById('myModal');
+
+                // Get the button that opens the modal
+                
+
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks the button, open the modal 
+               
+
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+           
+                var valores="";
+     
+                // Obtenemos todos los valores contenidos en los <td> de la fila
+                // seleccionada
+                $(this).parents("tr").find("td").each(function(){
+                    valores+=$(this).html()+"\n";
+                });
+                    
+                
+                var res = valores.split("\n");
+                var numero_identificacion =  res[0];
+                var nombre = res[1];
+                var apellido = res[2];
+                var  area = res[3];
+                var correo = res[4];
+
+                numero_identificacion =  numero_identificacion.substring(1, numero_identificacion.length - 1);
+                nombre = nombre.substring(1, nombre.length - 1);
+                apellido = apellido.substring(0, apellido.length - 1);
+                area = area.substring(1, area.length - 1);
+                correo = correo.substring(1, correo.length - 1);
+                
+                document.getElementById('numero_identificacion').value =  numero_identificacion;
+                document.getElementById('nombre').value = nombre;
+                document.getElementById('apellido').value = apellido;
+                document.getElementById('area').value = area;
+                document.getElementById('correo').value = correo;
+                
+                
+                modal.style.display = "block";
+            });
+        });
+
+        $(document).ready(function(){
+            $(".botonEliminar").click(function(){
+
+              // Get the modal
+          
+                var modal1 = document.getElementById('myModal1');
+
+                // Get the button that opens the modal
+                
+
+                // Get the <span> element that closes the modal
+                var span1 = document.getElementsByClassName("close1")[0];
+
+                // When the user clicks the button, open the modal 
+               
+
+                // When the user clicks on <span> (x), close the modal
+                span1.onclick = function() {
+                    modal1.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal1) {
+                        modal1.style.display = "none";
+                    }
+                }
+           
+                var valores1="";
+     
+                // Obtenemos todos los valores contenidos en los <td> de la fila
+                // seleccionada
+                $(this).parents("tr").find("td").each(function(){
+                    valores1+=$(this).html()+"\n";
+                });
+                    
+                
+                var res1 = valores1.split("\n");
+                var num_identificacion= res1[0];
+                num_identificacion= num_identificacion.substring(1, num_identificacion.length - 1);
+
+                document.getElementById('identificacionEliminar').value =  num_identificacion;
+
+
+                modal1.style.display = "block";
+            });
+        });
+        $("#formModificarInstructor").validate();
+    </script>
+   
+
+{% endblock %}
+

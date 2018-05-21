@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Resume - Start Bootstrap Theme</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename ='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/devicons/css/devicons.min.css')}}" rel="stylesheet'">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link type="text/css" href="{{url_for('static', filename ='css/resume.min.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{url_for('static', filename ='css/stylebutton.css')}}" rel="stylesheet"  />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script type="text/javascript" src="{{url_for('static', filename ='js/phaser.min.js')}}"></script>
+
+  </head>
+
+  <body id="page-top"> 
+    <nav class="navbar nav_style navbar-expand-lg navbar-dark  fixed-top" id="sideNav" style="background: #FCB622;">
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <div class="hidden-xs" style="overflow: hidden; width: 100%;">
+            <div class="col-md-5" style="float: left;">
+              <img  src=" {{ url_for('static', filename='img/encabezado.png') }} " class="img-responsive" alt="Soy ciudadano TIC"> 
+            </div>
+            <div class="col-md-7" style="float: left;"> 
+              <H3 style="font-weight:bold; color: #1E3077; font-size: 1.5em">SOY CIUDADANO TIC</H3>
+            </div>
+           </div>
+           <br><br>
+          <li class="nav-item">
+                    <button type="button" class="btn btn-default salir" onclick="location.href='/principalEstudiante1/{{curso}}'" style="width: 60%">
+                      Principal
+                    </button>
+          </li>
+          <br>
+          <br>
+           <li class="nav-item">
+
+               <img  src='{{ url_for("static", filename="img/exito.png") }}' class="img-responsive" alt="exito">
+               <h3>Alcanzado</h3> 
+          </li>
+          <br>
+         <li class="nav-item">
+               <img  src='{{ url_for("static", filename="img/pendiente.png") }}' class="img-responsive" alt="pendiente"> 
+               <h3>Pendiente</h3>
+            </li>
+            <br>
+          <br>
+          <br>
+          <br>
+
+            <li class="nav-item">
+
+                <div class="container">
+                    <form class="form-horizontal" name="sentMessage" id="logingForm" >
+                    <div class="col-sm-8"></div>
+                    <div class="col-sm-offset-4 col-sm-12">
+                    <button type="submit" class="btn btn-default salir" id="salir" name="ref" value="logout">Cerrar sesión</button>
+                    </div>
+                    </form>
+                </div>
+            </li>
+
+          
+          
+        </ul>
+
+      </div>
+    </nav>
+
+    
+<br>
+    <div class="container"><button class="propiedades_boton_menú bn tam_boton_pequenio" data-toggle="modal" data-target="#Modal-mapa-ras">Ver mapa de resultados de aprendizaje</button></div>
+    
+      <div class="container">
+        <table class="table table-hover table-bordered table-striped" style="text-align: center; font-size: 1.5em">
+          <thead>
+              <tr>
+                  <th style="display : none;">Código</th>
+                  <th>Nivel de aprendizaje</th>
+                  <th>Descripción</th>
+                  <th>Evaluación</th>
+                  
+              </tr>
+          </thead>
+
+          <tbody id="avance_ra">
+              {% for avence_ra in avance_ras %}
+                <tr id="ra + {{avence_ra.ra_id}}">
+                  <script type="text/javascript">
+                      var tr = document.getElementById("ra + {{avence_ra.ra_id}}");    
+                      var tdra_id = document.createElement("td");
+                      tdra_id.style.display = 'none';
+                      var tddescripcion = document.createElement("td");
+                      var mitd = document.createElement("td");
+                      var tdEvaluacion = document.createElement("td");
+                      tdEvaluacion.className = "abrir_actividad";
+                      tdEvaluacion.title="Dar clic para ver evaluación";
+                      tdra_id.innerHTML = "{{avence_ra.ra_id }}";
+                      mitd.innerHTML = "{{avence_ra.nivel}}";
+                      tddescripcion.innerHTML = "{{avence_ra.descripcion}}";
+                      
+
+                      if("{{avence_ra.estado}}" == "False"){
+                          
+                          tdEvaluacion.innerHTML = '<img  src=" {{ url_for("static", filename="img/pendiente.png") }} "'+'class="img-responsive" alt="pendiente">'; 
+                      }else{
+                          
+                          tdEvaluacion.innerHTML = '<img  src="{{ url_for("static", filename="img/exito.png") }} "'+ 'class="img-responsive" alt="exito">';
+                  
+                      }
+                      tr.appendChild(tdra_id);
+                      tr.appendChild(mitd);
+                      tr.appendChild(tddescripcion);
+                      tr.appendChild(tdEvaluacion);
+                  </script>
+                          
+                  
+                </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+    </div>
+  <div id="Modal-mapa-ras" class="modal">
+  <div class="modal-content" >
+    <div class="modal-header">
+      <div class="col-md-3"></div>
+        <h3>Mapa de avance de los resultados de aprendizaje</h3>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body row">
+      <div class="col-md-3">
+      </div> 
+      <div class="embed-responsive embed-responsive-16by9 col-md-8">
+        <iframe src="/mapa_ras/{{curso}}"  frameborder="0" allowfullscreen style="width: 70%; height:  100%"></iframe>
+      </div>
+            
+      <div class="col-md-2">
+      </div>     
+     </div>
+      <div class="modal-footer" >
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+   </div> 
+
+  </div>
+
+    <div id="myModal1" class="modal" >
+        <div class="modal-content">
+          <div class="modal-header row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+              <h5 id="titulo"> </h5>
+            </div> 
+            <div class="col-md-2">
+              <button type="button" class="close1 btn btn-default" data-dismiss="modal">&times;</button>
+            </div> 
+          </div>
+       
+        <div class="modal-body">
+          
+            <table class="table table-hover table-bordered table-striped" id="tabla_actividades"  style="text-align: center; font-size: 1.1em">
+              <thead>
+                <tr>
+                  <th>Resultado observable</th>
+                  <th>Actividad evaluativa</th>
+                  <th>Puntos minimos</th>
+                  <th>Puntos maximos</th>
+                  <th>Puntos obtenidos</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+            </table>
+          <!--</div>-->
+      
+        </div>
+    </div>                  
+  </div>
+
+
+<script type="text/javascript">
+
+  
+    var contenido_actividades =  {{ros|safe}};
+    
+                                       
+    
+    $(document).ready(function(){
+            $(".abrir_actividad").click(function(){
+
+              // Get the modal
+              var modal1 = document.getElementById('myModal1');
+              var tabla = document.createElement("tbody");
+              
+                // Get the button that opens the modal
+                
+
+                // Get the <span> element that closes the modal
+              var span1 = document.getElementsByClassName("close1")[0];
+
+                // When the user clicks the button, open the modal 
+               
+
+                // When the user clicks on <span> (x), close the modal
+              span1.onclick = function(){
+                modal1.style.display = "none";
+                tabla.innerHTML = "";
+
+              }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal1) {
+                        modal1.style.display = "none";
+                         tabla.innerHTML = "";
+                    }
+                }
+           
+                var valores1="";
+     
+                // Obtenemos todos los valores contenidos en los <td> de la fila
+                // seleccionada
+                $(this).parents("tr").find("td").each(function(){
+                    valores1+=$(this).html()+"\n";
+                });
+                    
+                
+                var res1 = valores1.split("\n");
+                var ra_actual =  res1[0];
+                var ra_descripcion = res1[2];
+                var titulo_ra = document.getElementById("titulo");
+                titulo_ra.innerHTML = ra_descripcion;
+
+
+                modal1.style.display = "block";
+
+                for(var i = 0; i < contenido_actividades.length; i++){
+
+                                var tr = document.createElement("tr");
+                                var ro = document.createElement("td");
+                                var actividad = document.createElement("td");
+                                var puntos_minimos = document.createElement("td");
+                                var puntos_maximos = document.createElement("td");
+                                var puntos = document.createElement("td");
+                                var estado = document.createElement("td");
+
+                    if(ra_actual == contenido_actividades[i][2]){
+                        
+                      ro.innerHTML = contenido_actividades[i][1];
+                      actividad.innerHTML = contenido_actividades[i][4];
+                      puntos_minimos.innerHTML = contenido_actividades[i][5];
+                      puntos_maximos.innerHTML = contenido_actividades[i][6];
+                      puntos.innerHTML = contenido_actividades[i][7];
+
+                    if(parseInt(contenido_actividades[i][7]) >=  parseInt(contenido_actividades[i][5]) && parseInt(contenido_actividades[i][7]) <=  parseInt(contenido_actividades[i][6])){
+                      estado.innerHTML = '<img  src=" {{ url_for("static", filename="img/chulito.png") }} "'+'class="img-responsive" alt="realizado">';
+                    }
+                    if(parseInt(contenido_actividades[i][7]) >  0 && parseInt(contenido_actividades[i][7]) <=  parseInt(contenido_actividades[i][5])){
+                        estado.innerHTML = '<img  src="{{ url_for("static", filename="img/en trabajo.png") }} "'+ 'class="img-responsive" alt="no realizado">';
+                    }if(parseInt(contenido_actividades[i][7]) == 0){
+                      estado.innerHTML= "..."
+
+                    }   
+
+                        /*if(contenido_actividades[i][8] == "False"){
+                          estado.innerHTML = '<img  src=" {{ url_for("static", filename="img/chulito.png") }} "'+'class="img-responsive" alt="pendiente">';
+                                  
+                        }else{
+                          estado.innerHTML = '<img  src="{{ url_for("static", filename="img/equiz.png") }} "'+ 'class="img-responsive" alt="chulito">';
+                        }*/
+                      tr.appendChild(ro);
+                      tr.appendChild(actividad);
+                      tr.appendChild(puntos_minimos);
+                      tr.appendChild(puntos_maximos);
+                      tr.appendChild(puntos);
+                      tr.appendChild(estado); 
+                      tabla.appendChild(tr);
+                    }
+
+                }
+
+              
+                document.getElementById("tabla_actividades").appendChild(tabla);
+
+                
+            });
+        });
+      
+ 
+
+</script>
+
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename ='vendor/jquery/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename ='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename = 'vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script type="text/javascript" src="{{ url_for('static', filename ='js/resume.min.js')}}"></script>
+
+  </body>
+
+</html>
+
+
+
+

@@ -1,0 +1,45 @@
+{% extends 'administrador/base/base_administrador.html'%}
+{% block content %}
+
+<div class="container-f">
+	<div class="col-xs">
+		<br><br>
+
+		<div class="col-md-12">
+			<h2>Creacion de categorías</h2>
+			<form class="form-horizontal" method="POST" id="formCrearCategoria">
+				<div class="form-group">
+					<label class="control-label col-sm-6 my_fonts" for="id_categoria">ID categoría:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control required" id="id_categoria" placeholder="ID Cohorte" name="id_categoria" minlength="3" maxlength="10">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-6 my_fonts" for="nombre">Nombre:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control required" id="nombre" name="nombre" placeholder="nombre" minlength="4" maxlength="50">
+					</div>
+				</div>
+					
+				<div class="form-group">
+					<label class="control-label col-sm-6 my_fonts" for="descripcion">Descripción:</label>
+					<div class="col-sm-10">
+						<textarea rows="10" cols="100" class="form-control required" id="descripcion" name="descripcion" minlength="10">
+	 					</textarea>
+					</div>
+				</div>
+
+				<div class="form-group"> 
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" name="guardar" class="btn btn-default  my_fonts button_submit"><i class="fa fa-floppy-o" aria-hidden="true" ></i> Guardar</button>
+					</div>
+				</div>
+			</form>
+          </div>
+    </div>
+</div>
+<script type="text/javascript">
+      $("#formCrearCategoria").validate();
+</script>
+{% endblock %}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" style="color: #efebe9;">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Resume - Start Bootstrap Theme</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename ='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/devicons/css/devicons.min.css')}}" rel="stylesheet'">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link type="text/css" href="{{ url_for('static', filename ='css/resume.min.css')}}" rel='stylesheet'>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename ='css/stylefonts.css')}}">
+    
+   
+  </head>
+
+  <body id="page-top" data-spy="scroll" data-target=".navbar" data-offset="50" style="background-color:#efebe9;">
+<div class="row">
+<div class="col-md-5">
+    <nav class="navbar nav_style navbar-expand-lg navbar-dark  fixed-top" id="sideNav" style="background: #FCB622; width: 50%" data-spy="scroll">
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav">
+          <li class="nav-item">
+          <div class="embed-responsive embed-responsive-16by9 ">
+            <iframe class="embed-responsive-item" src="//www.youtube.com/embed/8cK0JmxQu4s"></iframe>
+        </div>
+        </li>      
+         <p style="font-size: 1.2em; color: #000000 ">  La plataforma <strong>Soy Ciudadano TIC</strong> nace como una ayuda para optar por la certificación de Ciudadanía digital del <strong>Ministerio de las Tecnologías de Información y Comunicación MINTIC</strong> del Gobierno Nacional con el programa <strong>Vive Digital</strong>. Nace como una idea del estudiante de pregrado <strong>Cristian Valencia</strong> y bajó la dirección de la profesora <strong>Beatriz Florian</strong> ambos de la<strong>  Universidad del Valle </strong>, tras su experiencia como instructor en algunas instituciones de capacitación de la ciudad de Cali. Esta plataforma está pensada para el uso del adulto mayor y su aprendizaje en informática básica.</p>
+          
+        </ul>
+
+      </div>
+    </nav>
+ </div>   
+    <div class="container-fluid col-md-7">
+
+    {% block content %}
+    {% endblock %}
+    </div> 
+ </div>    
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename ='vendor/jquery/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename ='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename = 'vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script type="text/javascript" src="{{ url_for('static', filename ='js/resume.min.js')}}"></script>
+
+  </body>
+
+</html>

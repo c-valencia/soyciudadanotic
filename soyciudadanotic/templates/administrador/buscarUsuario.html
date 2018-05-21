@@ -1,0 +1,286 @@
+{% extends 'administrador/base/base_administrador.html'%}
+{% block content %}
+    
+
+    <div class="container-f">
+        <div class="col-xs">
+            <br><br><br><br><br><br><br>
+        
+            <div class="col-md-12">
+        	   <h2>Administración de usuarios</h2>
+
+    			
+    				<div class="container">
+                        <p>Para buscar digite el nombre o el tipo de usuario</p>  
+							<input type="text" id="buscador" class="form-control" placeholder="Buscar por..." >
+                    </div>
+    		</div>
+                    <hr>
+    		<div class="container" style="background-color: white;">
+    		    <table class="table table-hover table-bordered table-striped" >
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Tipo</th>
+                                    <th>Editar</th>
+                                    <th>Eliminar</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="buscarUsuario">
+                                {% for usuario in users %}
+                                  <tr>
+                                    <td> {{ usuario.login }} </td>
+                                    <td> {{ usuario.tipo }} </td>
+                                    <td class="botonEditar" style="width: 20px">
+                                        <div class="col-md-5" style="float: left;">
+                                            <img  src=" {{ url_for('static', filename='img/chulito.png') }} " class="img-responsive" alt="Chulito">
+                                        </div>
+                                        
+                                    </td>
+                                    <td  class="botonEliminar" style="width: 20px">
+                                        <div class="col-md-5" style="float: left;">
+                                            <img  src=" {{ url_for('static', filename='img/equiz.png') }} " class="img-responsive" alt="Chulito">
+                                        </div>
+                                        
+                                    </td>
+                                  </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+    			    </form>
+                </div>
+            </div>
+      </div>
+        
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+
+  
+      
+    
+
+    <style>
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 199; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+
+        }
+    </style>
+
+
+    <div id="myModal" class="modal" >
+      <div class="modal-content" >
+        <span class="close">&times;</span>
+         <form class="form-horizontal" method="POST" id="formModificarUsuario">
+            <div class="form-group">
+              <label class="control-label col-sm-2 my_fonts" for="login">login:</label>
+              <div class="col-sm-12">
+                <input type="text" name="login" class="form-control" id="login" readonly="readonly">
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label class="control-label col-sm-4  my_fonts" for="tipo_usuario">Tipo de Usuario:</label>
+              <div class="col-sm-12">
+                <select class="form-control" name="tipo_usuario" id="tipo_usuario" placeholder="Enter email">
+                  <option id="estudiante" name="estudiante">Estudiante</option>
+                  <option id="instructor" name="instructor">Instructor</option>
+                  <option id="administrador" name="administrador">Administrador</option>
+                </select> 
+              </div>
+            </div>
+
+
+
+            <div class="form-group">
+              <label class="control-label col-sm-2 my_fonts" for="contrasenia">Contraseña:</label>
+              <div class="col-sm-12"> 
+                <input type="password" name="contrasenia1" class="form-control password" id="contrasenia1" placeholder="Ingresa la nueva contraseña" minlength="4" maxlength="20">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4 my_fonts" for="contrasenia">Repita la contraseña:</label>
+              <div class="col-sm-12"> 
+                <input type="password" name="contrasenia2" class="form-control"  equalTo="#contrasenia1" id="contrasenia2" placeholder="Repita la nueva contraseña" minlength="4" maxlength="20">
+              </div>
+            </div>
+
+            <div class="form-group"> 
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" name="guardar" class="btn btn-default btn btn-success">Guardar</button>
+              </div>
+            </div>
+          </form>
+      </div>
+    </div>
+
+    <div id="myModal1" class="modal" >
+      <div class="modal-content" >
+        <span class="close1">&times;</span>
+        <form class="form-horizontal" method="POST">
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <input type="text" name="loginEliminar" class="form-control" id="loginEliminar" readonly="readonly">
+                </div>    
+                     <p>Está seguro que desea eliminar el registro </p>
+                <div class="col-sm-offset-2 col-sm-10">     
+                    <button type="submit" name="eliminar" class="btn btn-default   btn btn-danger" style="width: 100px">Eliminar</button>
+                </div>
+            </div>
+        </form>               
+      </div>
+    </div>
+
+    
+    <script>
+
+     $(document).ready(function(){
+        $("#buscador").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#buscarUsuario tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      }); 
+      
+        
+        $(document).ready(function(){
+            $(".botonEditar").click(function(){
+
+              // Get the modal
+          
+                var modal = document.getElementById('myModal');
+
+                // Get the button that opens the modal
+                
+
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks the button, open the modal 
+               
+
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+           
+                var valores="";
+     
+                // Obtenemos todos los valores contenidos en los <td> de la fila
+                // seleccionada
+                $(this).parents("tr").find("td").each(function(){
+                    valores+=$(this).html()+"\n";
+                });
+                    
+                
+                var res = valores.split("\n");
+                document.getElementById('login').value =  res[0];
+
+                if(res[1] ==  " Estudiante "){
+                  document.getElementById('tipo_usuario').selectedIndex = 0;   
+                };
+                if(res[1] ==  " Instructor "){
+                  document.getElementById('tipo_usuario').selectedIndex = 1;   
+                };
+                if(res[1] ==  " Administrador "){
+                  document.getElementById('tipo_usuario').selectedIndex = 2;   
+                };
+                
+                modal.style.display = "block";
+            });
+        });
+
+        $(document).ready(function(){
+            $(".botonEliminar").click(function(){
+
+              // Get the modal
+          
+                var modal1 = document.getElementById('myModal1');
+
+                // Get the button that opens the modal
+                
+
+                // Get the <span> element that closes the modal
+                var span1 = document.getElementsByClassName("close1")[0];
+
+                // When the user clicks the button, open the modal 
+               
+
+                // When the user clicks on <span> (x), close the modal
+                span1.onclick = function() {
+                    modal1.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal1) {
+                        modal1.style.display = "none";
+                    }
+                }
+           
+                var valores1="";
+     
+                // Obtenemos todos los valores contenidos en los <td> de la fila
+                // seleccionada
+                $(this).parents("tr").find("td").each(function(){
+                    valores1+=$(this).html()+"\n";
+                });
+                    
+                
+                var res1 = valores1.split("\n");
+                document.getElementById('loginEliminar').value =  res1[0];
+
+                modal1.style.display = "block";
+            });
+        });
+        $("#formModificarUsuario").validate();
+    </script>
+   
+
+{% endblock %}
+

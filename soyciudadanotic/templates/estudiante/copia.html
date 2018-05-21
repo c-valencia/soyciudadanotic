@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Resume - Start Bootstrap Theme</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename ='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/devicons/css/devicons.min.css')}}" rel="stylesheet'">
+    <link type="text/css" href="{{ url_for('static', filename ='vendor/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link type="text/css" href="{{url_for('static', filename ='css/resume.min.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{url_for('static', filename ='css/stylebutton.css')}}" rel="stylesheet"  />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename ='js/phaser.min.js')}}"></script>
+    <style type="text/css">
+        .embed-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        .embed-container iframe {
+            position: absolute;
+            top:0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+  </head>
+
+  <body id="page-top" style="background: #efebe9;">
+    <nav class="navbar nav_style navbar-expand-lg navbar-dark  fixed-top" id="sideNav" style="background: #FCB622;">
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <div class="hidden-xs" style="overflow: hidden; width: 100%;">
+            <div class="col-md-5" style="float: left;">
+              <img  src=" {{ url_for('static', filename='img/encabezado.png') }} " class="img-responsive" alt="Soy ciudadano TIC"> 
+            </div>
+            <div class="col-md-7" style="float: left;"> 
+              <H3 style="font-weight:bold; color: #1E3077;">SOY CIUDADANO TIC</H3>
+              <!--<FONT FACE="calibri" SIZE=5 COLOR="1E3077" style="">
+                SOY CIUDADANO TIC</FONT> --> 
+            </div>
+           </div>
+           <br><br>  
+          <li class="nav-item">
+            
+                <button type="button" class="propiedades_boton bn" >
+                  <img class="tamanio_imagen" src="{{ url_for('static', filename ='img/principal1.png')}}" alt="">
+                </button>
+                <ul class="dropdown-content">
+                    {% for curso in cursos %}
+                        <br>
+                        <li> 
+                            <button class=" propiedades_boton_menú bn tam_boton_grande" name="{{curso.id_curso}}">
+                                <a href="/estudiante/curso/{{curso.id_curso}}" style= "color: #1E3077" name="buscarUsuario">{{curso.nombre}}</a>
+
+                            </button>
+                        </li>
+                        
+                    {% endfor %}
+                    <li> 
+                            <button class=" propiedades_boton_menú bn tam_boton_grande" onclick="mostrar()">
+                                hola
+                            </button>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                    <button type="button" class="propiedades_boton bn" >
+                      <img class="tamanio_imagen" src="{{ url_for('static', filename ='img/principal3.png')}}" alt="">
+                    </button>
+                <ul class="dropdown-content">
+                    <br>
+                    <li> 
+                        <button class=" propiedades_boton_menú bn tam_boton_grande">Ver mapa de actividades</button>
+                    </li>
+                    <br>
+                    <li>
+                        <button class="propiedades_boton_menú bn tam_boton_pequenio" data-toggle="modal" data-target="#myModal">Ver mapa de cursos</button>
+                        
+                    </li>
+                    <br>
+                  
+                </ul>
+            </li>    
+        </ul>
+
+      </div>
+    </nav>
+    <div class="panel panel-default" id="mi_panel" >
+        <div class="panel-heading" style="background-color: #51A5DD; color: #FFFFFF">
+            <div class="container">
+                <h3>SOY CIUDADANO TIC</h3>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="container" >
+                <p>Bienvenido a la plataforma Soy Ciudadano TIC para la preparación en competencias informáticas.</p>
+               
+                    <div class="panel-group" id="accordion">
+                    <div class="panel panel-default ">    
+                     {% for ra in ras %}    
+                       
+                            <div class="panel-heading">
+                                <h4 class="panel-title" style="background-color: #51A5DD; color: #FFFFFF">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#{{ra.id_ra}}"><h5>{{ra.descripcion}} <h5> </a>
+                                </h4>
+                            </div>
+                            <div id="{{ra.id_ra}}" class="panel-collapse collapse">
+                                {% for actividad in actividades %}
+                                 <script type="text/javascript">
+                                    function info_actividades(){
+                                        var text = "{{b}}";
+                                        var res = text.split("&#39");
+                                        var trozos = "";
+                                        var i;
+                                        for(var i = 0; i < res.length; i++){
+                                            if(i % 2 != 0){
+                                                trozos += res[i].substring(1, res[i].length)+"\n";
+                                            }
+                                        }
+
+                                        var actividades_partes = trozos.split("\n");
+                                        var actividades_string = [];
+                                        var actividad = [];
+                                        var intervalo = 1;
+                                        for(var i = 0; i < actividades_partes.length; i++){
+                                            actividad.push(actividades_partes[i]);
+                                            //alert(actividad);
+                                            if(intervalo % 3 == 0 && intervalo != 0){
+                                                actividades_string.push(actividad);
+                                                actividad = [];
+                                            }
+                                            intervalo++;
+                                        }
+                                        return actividades_string;
+                                    }
+
+
+
+                                    if("{{actividad.ra_id}}" == "{{ra.id_ra}}"){
+                                        var midiv = document.createElement("div");
+                                        var descripcion = "";
+                                        var ruta = "";
+                                        var acts = info_actividades();
+                                        for(var i = 0; i < acts.length; i++){
+                                            
+                                            if("{{actividad.actividad}}" == acts[i][0]){
+                                                descripcion = acts[i][1];
+                                                if(acts[i][0].substring(2,3) == 'F'){
+                                                    ruta= acts[i][2];
+                                                }
+                                                if(acts[i][0].substring(2,3) == 'E'){
+                                                    ruta = "/estudiante/actividad/{{actividad.actividad}}";
+                                                } 
+                                            }
+                                        }
+                                    midiv.innerHTML = '<a href='+ruta+' style= "color: #1E3077" name="buscarUsuario">'+'{{actividad.posicion}}'+' '+descripcion+'</a>';
+                                        document.getElementById('{{ra.id_ra}}').appendChild(midiv);
+                                    }
+
+                                    function get_info_actividad(){
+                                        return acts;
+                                        
+                                    }
+                                </script>
+                               
+                            {% endfor %}
+
+                            </div>
+                        
+                        {% endfor %}
+                </div> 
+                </div>
+           
+        </div>
+    </div>
+    <script type="text/javascript">
+        
+
+        function mostrar(){
+           
+                                
+            alert("hola");
+
+        }
+    </script>
+
+    <!-- Trigger the modal with a button -->
+
+
+<!-- Modal -->
+<div id="myModal" class="modal">
+ 
+
+    <!-- Modal content-->
+    <div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body row">
+                    <div class="col-md-6">
+                        <table class="table table-hover table-bordered table-striped" >
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Descripción</th>
+                                    <th>Realizado</th>
+                                    
+                                </tr>
+                            </thead>
+
+                            <tbody id="avance_ra">
+                                {% for avence_ra in avance_ras %}
+                                  <tr id="ra + {{avence_ra.ra_id}}">
+                                    <!--<td>{{avence_ra.ra_id }} </td>-->
+                                    <!--<td>{{avence_ra.descripcion}} </td>-->
+                                    <script type="text/javascript">
+                                        var tr = document.getElementById("ra + {{avence_ra.ra_id}}");    
+                                        var tdra_id = document.createElement("td");
+                                        var tddescripcion = document.createElement("td");
+                                        var mitd = document.createElement("td");
+                                        mitd.className = "abrir_actividad";
+                                        tdra_id.innerHTML = "{{avence_ra.ra_id }}";
+                                        tddescripcion.innerHTML = "{{avence_ra.descripcion}}"
+                                        
+
+                                        if("{{avence_ra.estado}}" == "False"){
+                                            
+                                            mitd.innerHTML = '<img  src=" {{ url_for("static", filename="img/chulito.png") }} "'+'class="img-responsive" alt="Chulito">';
+                                            
+                                        }else{
+                                            
+                                            mitd.innerHTML = '<img  src="{{ url_for("static", filename="img/equiz.png") }} "'+ 'class="img-responsive" alt="equis">';
+                                    
+                                        }
+                                        tr.appendChild(tdra_id);
+                                        tr.appendChild(tddescripcion);
+                                        tr.appendChild(mitd);
+                                    </script>
+                                            
+                                    
+                                  </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+      
+            
+                  <div class="embed-container col-md-6">
+                     <iframe src="/act/'hola'"  frameborder="0" allowfullscreen style="width: 100%; height:  70%">
+                     </iframe>
+                  </div>
+              </div>
+        
+      </div>
+      <div class="modal-footer" >
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+ 
+</div>
+
+<div id="myModal1" class="modal" >
+      <div class="modal-content" >
+    <div class="modal-header">
+       
+            <button type="button" class="close1 btn btn-default" data-dismiss="modal" style="float:left;">&times;</button>
+       
+           
+        
+      </div>
+        <!---->
+        <div class="modal-body row">
+
+            <input type="text" name="loginEliminar" class="form-control" id="loginEliminar" readonly="readonly">
+                    <div class="col-md-6">
+                        <table class="table table-hover table-bordered table-striped" >
+                            <thead>
+                                <tr>
+                                    <th>Actividad</th>
+                                    <th>Secuencia</th>
+                                    <th>Descripción</th>
+                                    <th>Realizado</th>
+                                    
+                                </tr>
+                            </thead>
+
+                            <tbody id="avance_actividades">
+                                {% for avance_actividad in avance_actividades %}
+                                  <tr id="avance_actividad.ra_id avance_actividad.actividad avance_actividad.secuencia">
+                                    <td>{{avance_actividad.actividad}} </td>
+                                    <td>{{avance_actividad.secuencia}}</td>
+                                    <td>{{avance_actividad.descripcion}} </td>
+                                    <td>{{avance_actividad.estado}} </td>
+                                    
+                                            
+                                    
+                                  </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+      
+            
+                  <div class="embed-container col-md-6">
+                     <iframe src="/act/'hola'"  frameborder="0" allowfullscreen style="width: 100%; height:  70%">
+                     </iframe>
+                  </div>
+              </div>
+        
+      </div>
+      <div class="modal-footer" >
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>                  
+      </div>
+    </div>
+
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+            $(".abrir_actividad").click(function(){
+
+              // Get the modal
+          
+                var modal1 = document.getElementById('myModal1');
+
+                // Get the button that opens the modal
+                
+
+                // Get the <span> element that closes the modal
+                var span1 = document.getElementsByClassName("close1")[0];
+
+                // When the user clicks the button, open the modal 
+               
+
+                // When the user clicks on <span> (x), close the modal
+                span1.onclick = function() {
+                    modal1.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal1) {
+                        modal1.style.display = "none";
+                    }
+                }
+           
+                var valores1="";
+     
+                // Obtenemos todos los valores contenidos en los <td> de la fila
+                // seleccionada
+                $(this).parents("tr").find("td").each(function(){
+                    valores1+=$(this).html()+"\n";
+                });
+                    
+                
+                var res1 = valores1.split("\n");
+                document.getElementById('loginEliminar').value =  res1[0];
+
+            modal1.style.display = "block";
+            });
+        });
+      
+    </script>
+
+</script>
+    
+   
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename ='vendor/jquery/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename ='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename = 'vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script type="text/javascript" src="{{ url_for('static', filename ='js/resume.min.js')}}"></script>
+
+  </body>
+
+</html>
+
+    
+
+
+
+ 
